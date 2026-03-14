@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Andy Curtis <contactandyc@gmail.com>
+# SPDX-FileCopyrightText: 2026 Andy Curtis <contactandyc@gmail.com>
 # SPDX-FileCopyrightText: 2024–2025 Knode.ai — technical questions: contact Andy (above)
 # SPDX-License-Identifier: Apache-2.0
 
@@ -44,8 +44,10 @@ endif()
 
 include(GNUInstallDirs)
 
-# ---- Dependencies ----
+# ---- Dependencies (Standard CMake) ----
 find_package(OpenSSL REQUIRED)
+
+# ---- Dependencies (PkgConfig Shims) ----
 
 # ── Library variants (ALL are defined & built/installed) ──────────────────────
 add_library(an_encryption_library_debug  src/encrypt_decrypt.c)
@@ -69,7 +71,7 @@ if("CXX" IN_LIST CMAKE_PROJECT_LANGUAGES)
 endif()
 
 # Link deps once
-target_link_libraries(an_encryption_library_debug PUBLIC  OpenSSL::Crypto)
+target_link_libraries(an_encryption_library_debug PUBLIC  OpenSSL::Crypto  OpenSSL::SSL)
 
 # Per-variant optimization flavor
 target_compile_options(an_encryption_library_debug PRIVATE ${_A_DEBUG_OPTS})
@@ -103,7 +105,7 @@ if("CXX" IN_LIST CMAKE_PROJECT_LANGUAGES)
 endif()
 
 # Link deps once
-target_link_libraries(an_encryption_library_memory PUBLIC  OpenSSL::Crypto)
+target_link_libraries(an_encryption_library_memory PUBLIC  OpenSSL::Crypto  OpenSSL::SSL)
 
 # Per-variant optimization flavor
 target_compile_options(an_encryption_library_memory PRIVATE ${_A_DEBUG_OPTS})
@@ -140,7 +142,7 @@ if("CXX" IN_LIST CMAKE_PROJECT_LANGUAGES)
 endif()
 
 # Link deps once
-target_link_libraries(an_encryption_library_static PUBLIC  OpenSSL::Crypto)
+target_link_libraries(an_encryption_library_static PUBLIC  OpenSSL::Crypto  OpenSSL::SSL)
 
 # Per-variant optimization flavor
 target_compile_options(an_encryption_library_static PRIVATE ${_A_RELEASE_OPTS})
@@ -174,7 +176,7 @@ if("CXX" IN_LIST CMAKE_PROJECT_LANGUAGES)
 endif()
 
 # Link deps once
-target_link_libraries(an_encryption_library_shared PUBLIC  OpenSSL::Crypto)
+target_link_libraries(an_encryption_library_shared PUBLIC  OpenSSL::Crypto  OpenSSL::SSL)
 
 # Per-variant optimization flavor
 target_compile_options(an_encryption_library_shared PRIVATE ${_A_RELEASE_OPTS})
