@@ -49,8 +49,11 @@ find_package(OpenSSL REQUIRED)
 
 # ---- Dependencies (PkgConfig Shims) ----
 
+
 # ── Library variants (ALL are defined & built/installed) ──────────────────────
-add_library(an_encryption_library_debug  src/encrypt_decrypt.c)
+
+add_library(an_encryption_library_debug STATIC
+  src/encrypt_decrypt.c)
 
 target_include_directories(an_encryption_library_debug PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -84,7 +87,9 @@ install(TARGETS an_encryption_library_debug EXPORT an_encryption_libraryTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-add_library(an_encryption_library_memory  src/encrypt_decrypt.c)
+
+add_library(an_encryption_library_memory STATIC
+  src/encrypt_decrypt.c)
 
 target_include_directories(an_encryption_library_memory PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -121,7 +126,9 @@ install(TARGETS an_encryption_library_memory EXPORT an_encryption_libraryTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-add_library(an_encryption_library_static  src/encrypt_decrypt.c)
+
+add_library(an_encryption_library_static STATIC
+  src/encrypt_decrypt.c)
 
 target_include_directories(an_encryption_library_static PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -155,7 +162,9 @@ install(TARGETS an_encryption_library_static EXPORT an_encryption_libraryTargets
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
-add_library(an_encryption_library_shared  src/encrypt_decrypt.c)
+
+add_library(an_encryption_library_shared SHARED
+  src/encrypt_decrypt.c)
 
 target_include_directories(an_encryption_library_shared PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
