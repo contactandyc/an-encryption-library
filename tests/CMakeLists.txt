@@ -17,11 +17,23 @@ option(A_ENABLE_COVERAGE "Enable code coverage instrumentation" OFF)
 
 find_library(M_LIB m)
 
-# ---- Test executables ----
-set(TEST_EXECUTABLES "")
-add_executable(test_encrypt_decrypt  src/test_encrypt_decrypt.c)
+find_package(OpenSSL REQUIRED)
 
-target_include_directories(test_encrypt_decrypt PRIVATE  ${CMAKE_CURRENT_SOURCE_DIR}/src)
+# Fallback for standalone test builds (when not included via add_subdirectory)
+if(NOT TARGET an_encryption_library::an_encryption_library)
+  find_package(an_encryption_library CONFIG REQUIRED)
+endif()
+
+set(TEST_EXECUTABLES "")
+
+# ---- Targets ----
+add_executable(test_encrypt_decrypt
+  src/test_encrypt_decrypt.c
+)
+
+target_include_directories(test_encrypt_decrypt PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/../src
+)
 
 list(APPEND TEST_EXECUTABLES test_encrypt_decrypt)
 
@@ -36,9 +48,8 @@ if("CXX" IN_LIST CMAKE_PROJECT_LANGUAGES)
   )
 endif()
 
-if(NOT TARGET an_encryption_library::an_encryption_library)
-  find_package(an_encryption_library CONFIG REQUIRED)
-endif()
+target_link_libraries(test_encrypt_decrypt PRIVATE OpenSSL::Crypto)
+target_link_libraries(test_encrypt_decrypt PRIVATE OpenSSL::SSL)
 target_link_libraries(test_encrypt_decrypt PRIVATE an_encryption_library::an_encryption_library)
 
 if(M_LIB)
