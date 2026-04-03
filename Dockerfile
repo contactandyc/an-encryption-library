@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     wget \
+    abigail-tools \
     tar \
     unzip \
     zip \
@@ -25,12 +26,12 @@ RUN apt-get update && apt-get install -y \
 
 # Development tooling (optional)
 RUN apt-get update && apt-get install -y \
-    valgrind \
-    gdb \
-    perl \
     autoconf \
     automake \
+    gdb \
     libtool \
+    perl \
+    valgrind \
  && rm -rf /var/lib/apt/lists/*
 
 # --- Install CMake from official binaries (arch-aware) ------------------------
@@ -54,9 +55,6 @@ RUN useradd --create-home --shell /bin/bash dev && \
 USER dev
 WORKDIR /workspace
 
-# --- Optional Python venv for tools ------------------------------------------
-RUN python3 -m venv /opt/venv && /opt/venv/bin/pip install --upgrade pip
-ENV PATH="/opt/venv/bin:${PATH}"
 
 
 # --- Build & install this project --------------------------------------------
