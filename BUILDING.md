@@ -1,7 +1,7 @@
 # BUILDING
 
 This project: **An Encryption Library**
-Version: **0.0.7**
+Version: **0.0.8**
 
 ## Local build
 
