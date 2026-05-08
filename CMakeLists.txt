@@ -8,7 +8,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 project(an_encryption_library
-  VERSION 0.0.9
+  VERSION 0.0.10
   LANGUAGES C
 )
 
